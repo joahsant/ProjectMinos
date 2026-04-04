@@ -50,12 +50,22 @@ The glasses surface stays glanceable, passive, and low interruption so the user 
 
 ## Start Here
 - `AGENTS.md`
+- `docs/README.md`
 - `docs/PRD.md`
 - `docs/OPERATIONS.md`
 - `docs/FEATURES.md`
 - `docs/DECISIONS.md`
 - `docs/SECURITY.md`
 - `docs/DATA_GOVERNANCE.md`
+
+## Documentation Layout
+- `docs/README.md` is the entry point for the documentation set.
+- `docs/PRD.md` defines the product contract and MVP intent.
+- `docs/FEATURES.md` records current product behavior.
+- `docs/OPERATIONS.md` records factual project state and the execution queue.
+- `docs/DECISIONS.md` records active decisions and open questions.
+- `docs/SECURITY.md` covers secrets, transport, and security posture.
+- `docs/DATA_GOVERNANCE.md` covers storage, retention, and external data handling.
 
 ## Planned Product Shape
 - Primary surface: AI glasses projected experience
