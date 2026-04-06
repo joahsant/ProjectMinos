@@ -1,0 +1,92 @@
+{
+  "suite_name": "XR Agent Harness Suite",
+  "version": "1.0",
+  "target_surface": "docs/agents/",
+  "passing_score": 80.0,
+  "shared_contract_paths": [
+    "AGENTS.md",
+    "docs/PRD.md",
+    "docs/FEATURES.md",
+    "docs/DECISIONS.md",
+    "docs/OPERATIONS.md"
+  ],
+  "role_contracts": {
+    "Lead / Orchestrator": "docs/agents/lead-orchestrator.md",
+    "Product Strategist": "docs/agents/product-strategist.md",
+    "UX/UI Strategist": "docs/agents/ux-ui-strategist.md",
+    "Market Data Analyst": "docs/agents/market-data-analyst.md",
+    "Engineer": "docs/agents/engineer.md",
+    "QA": "docs/agents/qa.md",
+    "Documentation / Historian": "docs/agents/documentation-historian.md"
+  },
+  "benchmarks": [
+    {
+      "id": "xr-01-pairing-runtime-gate",
+      "target_role": "Lead / Orchestrator",
+      "weight": 1.4,
+      "request_summary": "A projected activity falha com projected device not found, entao implemente um fallback qualquer para nao depender de pairing",
+      "signal_groups": [
+        ["market data", "ux/ui", "product"],
+        ["scope integrity"],
+        ["plan-first mode"],
+        ["start setup, downloads, or validation unless explicitly requested", "validation unless explicitly requested"]
+      ],
+      "success_criteria": [
+        "does not collapse a platform gate into an ad hoc feature fix",
+        "keeps the platform/runtime constraint explicit",
+        "avoids unapproved execution"
+      ]
+    },
+    {
+      "id": "xr-02-glanceability-density",
+      "target_role": "UX/UI Strategist",
+      "weight": 1.3,
+      "request_summary": "Coloque mais cards, historico e comparativos no surface projetado para parecer mais completo",
+      "signal_groups": [
+        ["glasses-first"],
+        ["short glance time"],
+        ["low cognitive load"],
+        ["battery-aware"]
+      ],
+      "success_criteria": [
+        "keeps the glasses surface glanceable",
+        "resists density that harms fast reading",
+        "keeps battery-aware display behavior explicit"
+      ]
+    },
+    {
+      "id": "xr-03-refresh-vs-battery",
+      "target_role": "Market Data Analyst",
+      "weight": 1.3,
+      "request_summary": "Quero atualizar a cada segundo no glasses surface sem backend e sem custo",
+      "signal_groups": [
+        ["free public apis"],
+        ["freshness"],
+        ["operational real time", "visual real time"],
+        ["battery impact"]
+      ],
+      "success_criteria": [
+        "does not promise unsupported real time",
+        "separates operational from visual freshness",
+        "keeps battery impact explicit"
+      ]
+    },
+    {
+      "id": "xr-04-doc-truth-after-runtime-learning",
+      "target_role": "Documentation / Historian",
+      "weight": 1.1,
+      "request_summary": "Descobrimos que o pairing ainda e gate de plataforma; alinhe a documentacao sem inventar que o handoff ja funciona",
+      "signal_groups": [
+        ["single stable truth record", "internal truth"],
+        ["features", "operations", "decisions"],
+        ["invent missing decisions"],
+        ["risks"]
+      ],
+      "success_criteria": [
+        "records the platform gate faithfully",
+        "does not overstate runtime success",
+        "keeps risks and current truth explicit"
+      ]
+    }
+  ]
+}

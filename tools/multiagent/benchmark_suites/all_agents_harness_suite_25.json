@@ -1,0 +1,42 @@
+{
+  "suite_name": "All Agents Harness Suite 25",
+  "version": "1.0",
+  "target_surface": "docs/agents/",
+  "passing_score": 75.0,
+  "role_contracts": {
+    "Lead / Orchestrator": "docs/agents/lead-orchestrator.md",
+    "Product Strategist": "docs/agents/product-strategist.md",
+    "UX/UI Strategist": "docs/agents/ux-ui-strategist.md",
+    "Market Data Analyst": "docs/agents/market-data-analyst.md",
+    "Engineer": "docs/agents/engineer.md",
+    "QA": "docs/agents/qa.md",
+    "Documentation / Historian": "docs/agents/documentation-historian.md"
+  },
+  "benchmarks": [
+    { "id": "lead-01", "target_role": "Lead / Orchestrator", "signal_groups": [["only intake role"], ["plan-first mode"], ["next owner"]] },
+    { "id": "lead-02", "target_role": "Lead / Orchestrator", "signal_groups": [["product"], ["ux/ui"], ["market data"]] },
+    { "id": "lead-03", "target_role": "Lead / Orchestrator", "signal_groups": [["trader interruption cost"], ["glanceability"], ["battery impact"]] },
+    { "id": "lead-04", "target_role": "Lead / Orchestrator", "signal_groups": [["contracts"], ["governance"], ["scope integrity"]] },
+    { "id": "product-01", "target_role": "Product Strategist", "signal_groups": [["loading"], ["error states"], ["retry"]] },
+    { "id": "product-02", "target_role": "Product Strategist", "signal_groups": [["future scope"], ["high-leverage numbered questions"]] },
+    { "id": "product-03", "target_role": "Product Strategist", "signal_groups": [["user-visible states"], ["hidden requirements"]] },
+    { "id": "ux-01", "target_role": "UX/UI Strategist", "signal_groups": [["glasses-first"], ["short glance time"], ["low cognitive load"]] },
+    { "id": "ux-02", "target_role": "UX/UI Strategist", "signal_groups": [["accessibility"], ["battery-aware"], ["interaction timing"]] },
+    { "id": "ux-03", "target_role": "UX/UI Strategist", "signal_groups": [["compact, medium, and expanded"], ["readability"]] },
+    { "id": "market-01", "target_role": "Market Data Analyst", "signal_groups": [["free public apis"], ["freshness"], ["rate limits"]] },
+    { "id": "market-02", "target_role": "Market Data Analyst", "signal_groups": [["currency pairs"], ["asset identifiers"], ["quote semantics"]] },
+    { "id": "market-03", "target_role": "Market Data Analyst", "signal_groups": [["operational real time"], ["visual real time"], ["battery impact"]] },
+    { "id": "engineer-01", "target_role": "Engineer", "signal_groups": [["approved premises"], ["deviations"], ["return to lead"]] },
+    { "id": "engineer-02", "target_role": "Engineer", "signal_groups": [["root cause"], ["scope"], ["silently"]] },
+    { "id": "engineer-03", "target_role": "Engineer", "signal_groups": [["build"], ["runtime validation"], ["explicitly approved"]] },
+    { "id": "qa-01", "target_role": "QA", "signal_groups": [["happy path, edge cases, and regressions"], ["evidence"]] },
+    { "id": "qa-02", "target_role": "QA", "signal_groups": [["failure locality"], ["state"], ["runtime"]] },
+    { "id": "qa-03", "target_role": "QA", "signal_groups": [["passed with caveats"], ["not tested"], ["failed"]] },
+    { "id": "historian-01", "target_role": "Documentation / Historian", "signal_groups": [["single stable truth record"], ["separate root causes"]] },
+    { "id": "historian-02", "target_role": "Documentation / Historian", "signal_groups": [["features"], ["operations"], ["decisions"]] },
+    { "id": "historian-03", "target_role": "Documentation / Historian", "signal_groups": [["risks"], ["deferred work"], ["inventing decisions"]] },
+    { "id": "cross-01", "target_role": "Lead / Orchestrator", "contract_paths": ["AGENTS.md", "docs/agents/lead-orchestrator.md"], "signal_groups": [["lead / orchestrator"], ["agent harness"], ["tools/multiagent"]] },
+    { "id": "cross-02", "target_role": "Lead / Orchestrator", "contract_paths": ["AGENTS.md", "docs/skills/agent_harness_iteration.md"], "signal_groups": [["baseline"], ["one mutable surface"], ["benchmark suite fixed"]] },
+    { "id": "cross-03", "target_role": "Lead / Orchestrator", "contract_paths": ["AGENTS.md", "docs/skills/request_cycle.md"], "signal_groups": [["persist"], ["role reports"], ["next action"]] }
+  ]
+}

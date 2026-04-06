@@ -10,8 +10,8 @@
 - Skills hold repeatable procedures, not permanent project rules.
 
 ## DEC-002 Current Phase
-- The project is in planning and documentation mode.
-- No project code, environment setup, SDK download, emulator run, or device install should happen until the human explicitly approves execution.
+- The project is in active implementation for the approved MVP shell, with planning and documentation still required for scope and behavior changes.
+- New project code, setup, build, emulator execution, device install, or validation should only happen when explicitly approved by the human in the current thread.
 
 ## DEC-003 Platform Direction
 - The product target is Google AI glasses under the current Android XR development model.

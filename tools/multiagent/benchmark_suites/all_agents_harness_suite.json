@@ -1,0 +1,122 @@
+{
+  "suite_name": "All Agents Harness Suite",
+  "version": "1.0",
+  "target_surface": "docs/agents/",
+  "passing_score": 75.0,
+  "shared_contract_paths": [
+    "AGENTS.md",
+    "docs/skills/request_cycle.md"
+  ],
+  "role_weights": {
+    "Lead / Orchestrator": 1.4,
+    "Product Strategist": 1.2,
+    "UX/UI Strategist": 1.2,
+    "Market Data Analyst": 1.2,
+    "Engineer": 1.0,
+    "QA": 1.0,
+    "Documentation / Historian": 1.0
+  },
+  "role_contracts": {
+    "Lead / Orchestrator": "docs/agents/lead-orchestrator.md",
+    "Product Strategist": "docs/agents/product-strategist.md",
+    "UX/UI Strategist": "docs/agents/ux-ui-strategist.md",
+    "Market Data Analyst": "docs/agents/market-data-analyst.md",
+    "Engineer": "docs/agents/engineer.md",
+    "QA": "docs/agents/qa.md",
+    "Documentation / Historian": "docs/agents/documentation-historian.md"
+  },
+  "focus_roles": [
+    "Lead / Orchestrator",
+    "Product Strategist",
+    "UX/UI Strategist",
+    "Market Data Analyst",
+    "Engineer",
+    "QA",
+    "Documentation / Historian"
+  ],
+  "scoring_dimensions": [
+    "boundary_accuracy",
+    "clarification_quality",
+    "actionability",
+    "scope_discipline",
+    "fidelity_to_repository_rules",
+    "concision"
+  ],
+  "benchmarks": [
+    {
+      "id": "lead-cross-boundary-routing",
+      "target_role": "Lead / Orchestrator",
+      "weight": 1.5,
+      "signal_groups": [
+        ["only intake role", "only intake authority"],
+        ["product", "ux/ui", "market data"],
+        ["plan-first mode", "execution path"],
+        ["next owner"],
+        ["scope integrity", "scope explicit"]
+      ]
+    },
+    {
+      "id": "product-state-gap",
+      "target_role": "Product Strategist",
+      "weight": 1.2,
+      "signal_groups": [
+        ["loading, success, and error", "loading"],
+        ["retry"],
+        ["high-leverage numbered questions", "smallest set of high-leverage numbered questions"],
+        ["future scope"]
+      ]
+    },
+    {
+      "id": "ux-glasses-surface-discipline",
+      "target_role": "UX/UI Strategist",
+      "weight": 1.2,
+      "signal_groups": [
+        ["glasses-first"],
+        ["short glance time", "glance time"],
+        ["compact, medium, and expanded"],
+        ["battery-aware", "battery cost"]
+      ]
+    },
+    {
+      "id": "market-data-source-tradeoff",
+      "target_role": "Market Data Analyst",
+      "weight": 1.2,
+      "signal_groups": [
+        ["free public apis", "free public"],
+        ["freshness"],
+        ["currency pairs", "asset identifiers"],
+        ["battery impact"]
+      ]
+    },
+    {
+      "id": "engineer-bounded-scope",
+      "target_role": "Engineer",
+      "signal_groups": [
+        ["approved premises"],
+        ["root cause"],
+        ["deviations"],
+        ["return to lead"]
+      ]
+    },
+    {
+      "id": "qa-locality-and-evidence",
+      "target_role": "QA",
+      "signal_groups": [
+        ["happy path, edge cases, and regressions"],
+        ["failure locality", "state, route, persistence, data, and runtime"],
+        ["evidence"],
+        ["not tested", "failed", "passed with caveats"]
+      ]
+    },
+    {
+      "id": "historian-truth-discipline",
+      "target_role": "Documentation / Historian",
+      "signal_groups": [
+        ["single stable truth record", "internal truth"],
+        ["separate root causes"],
+        ["risks"],
+        ["deferred work", "deferred"]
+      ]
+    }
+  ]
+}

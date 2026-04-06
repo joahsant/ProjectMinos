@@ -20,6 +20,10 @@
 - `DECISIONS.md` records active decisions and open questions that still shape the repository.
 - `SECURITY.md` records security posture, secrets handling, and transport expectations.
 - `DATA_GOVERNANCE.md` records data retention, persistence, and external data handling rules.
+- `agents/` defines stable role contracts.
+- `skills/` defines repeatable workflows.
+- `playbooks/` provides compact routing references.
+- `templates/` provides structured report scaffolds.
 
 ## Current Phase
 - The repository is in documentation and initial implementation alignment mode.
@@ -36,3 +40,5 @@
 ## Related
 - Root overview: `../README.md`
 - Governance contract: `../AGENTS.md`
+- Routing playbook: `playbooks/activation_matrix.md`
+- Harness workflow: `skills/agent_harness_iteration.md`

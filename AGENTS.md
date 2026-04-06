@@ -2,7 +2,8 @@
 
 ## Purpose
 - This file is the primary execution contract for Codex in this repository.
-- It defines persistent project rules, intake behavior, routing boundaries, and delivery standards.
+- It defines persistent project rules, intake behavior, routing boundaries, delivery standards, and the agent-harness improvement loop.
+- It does not replace feature, operations, security, or data-governance docs. Those remain the domain sources of truth they own.
 
 ## Authority Model
 - Prefer authority in this order:
@@ -21,7 +22,9 @@
 ## Current Project Direction
 - The product is an Android XR app for AI glasses.
 - The initial target is a Bitcoin quote surface projected to AI glasses through the Android XR development model currently available.
-- The current phase is scope, architecture, and documentation.
+- The product promise is passive monitoring for traders with low interruption cost.
+- The glasses surface must stay glanceable, battery-aware, and readable at a short dwell time.
+- The current phase still requires strong planning and documentation discipline even when implementation tasks are approved.
 - Do not start project code, builds, installs, emulator runs, or environment downloads until the human explicitly approves execution.
 - When asking how to develop the product, frame questions around trader interruption cost, glanceability, battery impact, and passive monitoring first.
 
@@ -29,9 +32,16 @@
 - Every new request in this repository must begin with `Lead / Orchestrator`.
 - Do not start directly as `Engineer`, `QA`, or another role even when the user asks for implementation immediately.
 - Every new feature or material feature expansion must route through the agent stack before implementation.
+- The first meaningful response for a new request must make the Lead intake explicit:
+  - interpretation
+  - classification
+  - gate state
+  - activated roles and depth
+  - next owner
 - If the request is still in discovery or planning, stay in documentation and premise-definition mode.
 - If clarification is needed, agents must ask numbered questions and include only the short suggestions needed to answer quickly.
 - Prefer one consolidated batch of numbered questions over many small rounds.
+- When bootstrapping from the shell, use `start-request.ps1` or `python tools/multiagent/lead_entrypoint.py`.
 
 ## Multiagent Model
 - `Lead / Orchestrator` is the only intake role.
@@ -58,6 +68,8 @@
   - `light validation`
   - `no-impact confirmation`
 - Use the narrowest valid route.
+- A simple request still passes logically through the stack, but most roles may stay at light or no-impact depth.
+- Use `docs/playbooks/activation_matrix.md` as the compact routing reference.
 
 ## Persistent Project Rules
 - Treat `docs/FEATURES.md` as the source of truth for current product behavior.
@@ -70,6 +82,8 @@
 - Do not start build, install, emulator, device, or runtime validation unless the user explicitly asks for it in the current thread.
 - Do not download SDKs, IDEs, emulators, or API tools until the user explicitly approves environment setup.
 - For this project, battery cost is a first-class product concern; avoid gratuitous polling, rendering, and background work.
+- When revising agent contracts, routing logic, or workflow prompts, use the harness iteration loop instead of untracked prompt drift.
+- Keep the repository coherent after every completed governance/tooling task; do not leave broken references to missing agent docs, playbooks, or harness files.
 
 ## Mandatory Work Order
 - For every substantial task:
@@ -86,7 +100,29 @@
 - Read `docs/DECISIONS.md` before inventing answers to unresolved behavior.
 - Read `docs/FEATURES.md` before changing feature behavior.
 - Read `docs/SECURITY.md` and `docs/DATA_GOVERNANCE.md` when touching API keys, transport, user preferences, telemetry, or persistence.
+- Read `docs/skills/agent_harness_iteration.md` when improving agent contracts, prompts, or routing behavior.
 - Read the relevant agent contracts in `docs/agents/` for scoped role behavior.
+
+## Agent Harness Rule
+- Use the harness when the task is about improving agent behavior itself, not product behavior.
+- Start from a baseline before editing the target contract, skill, or routing tool.
+- Change one mutable surface at a time.
+- Keep the benchmark suite fixed for the duration of a comparative run.
+- Log the candidate result and keep the change only when the score improves, or when the score holds and the contract is simpler.
+- Use:
+  - `python tools/multiagent/agent_harness_entrypoint.py`
+  - `python tools/multiagent/agent_harness_cycle.py`
+  - `python tools/multiagent/agent_harness_scorer.py`
+  - `powershell -File tools/multiagent/start-agent-harness-cycle.ps1`
+
+## Request Persistence
+- Persist request state when:
+  - more than one role participates
+  - the request spans more than one turn or cycle
+  - there are open risks, blocked decisions, or deferred work
+  - the user explicitly wants traceability
+- Persist the Lead intake and every participating role report under the same active request state whenever persistence is enabled.
+- Runtime persistence for shell workflows lives under `%LOCALAPPDATA%\\CodexLead\\Project Minos\\`.
 
 ## Definition Of Done
 - Docs and code are aligned.
@@ -98,4 +134,7 @@
 - `AGENTS.md` is the primary Codex contract for this repository.
 - Agent contracts live under `docs/agents/`.
 - Workflow skills live under `docs/skills/`.
+- Routing support playbooks live under `docs/playbooks/`.
+- Templates live under `docs/templates/`.
 - Operational state and memory live under `docs/OPERATIONS.md` and `docs/DECISIONS.md`.
+- Lead bootstrap and harness utilities live under `tools/multiagent/`.

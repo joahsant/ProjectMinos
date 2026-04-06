@@ -1,0 +1,123 @@
+{
+  "suite_name": "Core Agent Harness Suite",
+  "version": "1.0",
+  "target_surface": "docs/agents/lead-orchestrator.md",
+  "focus_roles": [
+    "Lead / Orchestrator",
+    "Product Strategist",
+    "UX/UI Strategist",
+    "Market Data Analyst"
+  ],
+  "scoring_dimensions": [
+    "boundary_accuracy",
+    "clarification_quality",
+    "actionability",
+    "scope_discipline",
+    "fidelity_to_repository_rules",
+    "concision"
+  ],
+  "benchmarks": [
+    {
+      "id": "lead-feature-flow-btc-surface",
+      "target_role": "Lead / Orchestrator",
+      "request_summary": "Quero adicionar alertas no surface dos oculos com novos estados, mas ainda nao defini quando mostrar, como falha e o impacto na bateria.",
+      "expected_behavior": [
+        "Classify as feature flow",
+        "Activate Product Strategist before engineering",
+        "Activate UX/UI Strategist before engineering",
+        "Keep plan-first mode explicit",
+        "Ask only missing high-leverage questions"
+      ],
+      "failure_modes": [
+        "Routes directly to Engineer",
+        "Ignores battery and state changes",
+        "Asks vague generic questions"
+      ],
+      "success_criteria": [
+        "asks high-leverage numbered questions",
+        "activates Product and UX before engineering",
+        "keeps scope explicit"
+      ]
+    },
+    {
+      "id": "lead-market-data-change",
+      "target_role": "Lead / Orchestrator",
+      "request_summary": "Quero trocar Binance por outra fonte e talvez reduzir o refresh para 10 segundos, mas nao sei o custo nem a garantia de frescor.",
+      "expected_behavior": [
+        "Recognize data-contract and polling change",
+        "Activate Market Data Analyst before engineering",
+        "Keep battery and freshness tradeoffs explicit"
+      ],
+      "failure_modes": [
+        "Treats it as a plain implementation task",
+        "Ignores polling and source guarantees",
+        "Skips Market Data Analyst"
+      ],
+      "success_criteria": [
+        "routes source and polling questions correctly",
+        "flags battery and freshness tradeoffs",
+        "keeps next owner explicit"
+      ]
+    },
+    {
+      "id": "product-state-completeness",
+      "target_role": "Product Strategist",
+      "request_summary": "Adicionar um modo de reconexao depois de erro de rede, mas sem detalhe de loading, retry, recuperacao ou quando o quote some.",
+      "expected_behavior": [
+        "Map loading, success, and error states",
+        "Ask about retry and recovery behavior",
+        "Avoid inventing hidden business rules"
+      ],
+      "failure_modes": [
+        "Assumes silent behavior",
+        "Misses retry semantics",
+        "Collapses product questions into engineering guesses"
+      ],
+      "success_criteria": [
+        "maps empty loading success and error states",
+        "asks product-premise questions",
+        "does not invent hidden business logic"
+      ]
+    },
+    {
+      "id": "ux-glanceability-gap",
+      "target_role": "UX/UI Strategist",
+      "request_summary": "A projected surface esta informativa, mas talvez densa demais para leitura em um glance rapido e em larguras diferentes.",
+      "expected_behavior": [
+        "Prioritize glanceability and accessibility",
+        "Keep width behavior explicit when relevant",
+        "Avoid decorative motion"
+      ],
+      "failure_modes": [
+        "Only talks about styling taste",
+        "Ignores glance time",
+        "Suggests constant motion"
+      ],
+      "success_criteria": [
+        "covers glanceability and accessibility risks",
+        "covers responsive widths when relevant",
+        "keeps battery-aware behavior explicit"
+      ]
+    },
+    {
+      "id": "market-data-freshness-tradeoff",
+      "target_role": "Market Data Analyst",
+      "request_summary": "Quero parecer real time no glasses surface, mas sem pagar API e sem destruir bateria.",
+      "expected_behavior": [
+        "Separate visual real time from operational real time",
+        "Discuss freshness guarantees and polling limits",
+        "Avoid promising unsupported real time"
+      ],
+      "failure_modes": [
+        "Promises real time without guarantees",
+        "Ignores battery impact",
+        "Repeats provider marketing language"
+      ],
+      "success_criteria": [
+        "clarifies operational versus visual real time",
+        "covers polling and freshness constraints",
+        "does not promise unsupported free real time"
+      ]
+    }
+  ]
+}

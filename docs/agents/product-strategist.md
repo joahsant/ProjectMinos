@@ -5,10 +5,12 @@
 
 ## Responsibilities
 - Identify hidden requirements.
+- Map empty, loading, success, and error states.
+- Clarify retry, back-navigation, recovery, and deferred future-scope behavior when relevant.
 - Slice MVP versus future scope cleanly.
-- Clarify visible states such as loading, stale data, empty history, and network failure.
-- Ask numbered clarification questions when product behavior is missing.
+- Ask the smallest set of high-leverage numbered questions when product behavior is missing.
 
 ## Must Not
 - Decide visual styling owned by UX/UI.
 - Invent product behavior that conflicts with `docs/FEATURES.md` or `docs/DECISIONS.md`.
+- Collapse product-premise questions into engineering guesses.

@@ -1,0 +1,116 @@
+{
+  "suite_name": "Real Requests Harness Suite",
+  "version": "1.0",
+  "target_surface": "docs/agents/",
+  "passing_score": 80.0,
+  "shared_contract_paths": [
+    "AGENTS.md",
+    "docs/skills/request_cycle.md",
+    "docs/skills/feature_intake.md"
+  ],
+  "role_weights": {
+    "Lead / Orchestrator": 1.5,
+    "Product Strategist": 1.2,
+    "UX/UI Strategist": 1.2,
+    "Market Data Analyst": 1.2,
+    "Documentation / Historian": 1.1
+  },
+  "role_contracts": {
+    "Lead / Orchestrator": "docs/agents/lead-orchestrator.md",
+    "Product Strategist": "docs/agents/product-strategist.md",
+    "UX/UI Strategist": "docs/agents/ux-ui-strategist.md",
+    "Market Data Analyst": "docs/agents/market-data-analyst.md",
+    "Engineer": "docs/agents/engineer.md",
+    "QA": "docs/agents/qa.md",
+    "Documentation / Historian": "docs/agents/documentation-historian.md"
+  },
+  "benchmarks": [
+    {
+      "id": "real-01-agent-governance-review",
+      "target_role": "Lead / Orchestrator",
+      "weight": 1.5,
+      "request_summary": "Acabei de implementar regras novas para todos os agentes e um pipeline para autoresearch de agents, verifique no projeto nostrat e replique para esse projeto",
+      "signal_groups": [
+        ["contracts", "governance"],
+        ["inspect current contracts", "inspect"],
+        ["agent harness", "autoresearch-style loop"],
+        ["scope integrity", "bounded"],
+        ["next owner"]
+      ],
+      "success_criteria": [
+        "inspects the current governance before editing",
+        "treats the request as structural work",
+        "ties the changes to agent behavior instead of product behavior"
+      ]
+    },
+    {
+      "id": "real-02-provider-refresh-tradeoff",
+      "target_role": "Lead / Orchestrator",
+      "weight": 1.4,
+      "request_summary": "Troque Binance por outra fonte e veja se da para atualizar a cada 10 segundos sem matar a bateria dos oculos",
+      "signal_groups": [
+        ["market data"],
+        ["battery impact"],
+        ["freshness"],
+        ["product", "ux/ui"],
+        ["plan-first mode"]
+      ],
+      "success_criteria": [
+        "routes to market-data analysis before implementation",
+        "keeps battery and freshness explicit",
+        "does not flatten the request into a code task"
+      ]
+    },
+    {
+      "id": "real-03-pairing-versus-app-bug",
+      "target_role": "QA",
+      "weight": 1.2,
+      "request_summary": "A projected activity ainda nao sobe e nao sei se e pairing do Android XR, estado do app ou runtime do emulador",
+      "signal_groups": [
+        ["failure locality"],
+        ["runtime"],
+        ["evidence"],
+        ["happy path, edge cases, and regressions"]
+      ],
+      "success_criteria": [
+        "separates runtime/platform failures from app-local failures",
+        "demands explicit evidence",
+        "keeps failure locality narrow"
+      ]
+    },
+    {
+      "id": "real-04-product-failure-visibility",
+      "target_role": "Product Strategist",
+      "weight": 1.1,
+      "request_summary": "Quando o refresh falhar depois do primeiro sucesso, talvez seja melhor manter o ultimo valor em vez de voltar para loading",
+      "signal_groups": [
+        ["loading"],
+        ["error"],
+        ["retry"],
+        ["future scope"]
+      ],
+      "success_criteria": [
+        "maps the visible states explicitly",
+        "does not silently invent failure semantics",
+        "keeps future-scope boundaries visible"
+      ]
+    },
+    {
+      "id": "real-05-xr-density-review",
+      "target_role": "UX/UI Strategist",
+      "weight": 1.1,
+      "request_summary": "A tela dos oculos esta completa, mas talvez tenha texto demais para um glance rapido e pouca hierarquia visual",
+      "signal_groups": [
+        ["glasses-first"],
+        ["short glance time"],
+        ["low cognitive load"],
+        ["accessibility"]
+      ],
+      "success_criteria": [
+        "optimizes for glanceability instead of density",
+        "keeps accessibility explicit",
+        "avoids ornamental motion"
+      ]
+    }
+  ]
+}
