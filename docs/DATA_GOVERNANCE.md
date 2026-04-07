@@ -11,7 +11,7 @@
 - Retention should stay short and product-driven.
 
 ### User Preferences
-- Includes selected asset, preferred quote pair, display options, and future companion-surface configuration.
+- Includes selected asset, host-side saved collection, display options, and future companion-surface configuration.
 - Sensitivity: low to medium.
 - User preferences should remain separate from telemetry.
 
@@ -24,6 +24,7 @@
 - Do not mix user preferences into telemetry datasets.
 - Do not keep unnecessary long-lived market-history storage in the MVP.
 - Keep future companion-surface pairing state separate from quote cache state.
+- Keep the saved host-side coin collection separate from transient market snapshot cache state.
 
 ## Retention Direction
 - Market-data cache should be retained only as long as it improves the user experience.

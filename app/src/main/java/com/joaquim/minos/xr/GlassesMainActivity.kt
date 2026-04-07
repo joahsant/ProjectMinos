@@ -7,8 +7,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.xr.glimmer.GlimmerTheme
-import com.joaquim.minos.data.BinanceApiClient
-import com.joaquim.minos.data.BinanceMarketRepository
+import com.joaquim.minos.data.CoinGeckoApiClient
+import com.joaquim.minos.data.CoinGeckoMarketRepository
+import com.joaquim.minos.data.HostCollectionPreferences
 import com.joaquim.minos.ui.MarketViewModel
 import com.joaquim.minos.ui.MarketViewModelFactory
 
@@ -21,11 +22,12 @@ class GlassesMainActivity : ComponentActivity() {
 
         setContent {
             val repository = remember {
-                BinanceMarketRepository(
-                    apiClient = BinanceApiClient(),
+                CoinGeckoMarketRepository(
+                    apiClient = CoinGeckoApiClient(),
                 )
             }
-            val factory = remember { MarketViewModelFactory(repository) }
+            val preferences = remember { HostCollectionPreferences(applicationContext) }
+            val factory = remember { MarketViewModelFactory(repository, preferences) }
             val viewModel: MarketViewModel = viewModel(factory = factory)
 
             GlimmerTheme {

@@ -10,16 +10,19 @@ fun Long.toDisplayTime(): String {
     return formatter.format(Date(this))
 }
 
-fun String.toUsdtDisplay(): String {
-    val value = toDoubleOrNull() ?: return this
+fun Double.toUsdDisplay(): String {
     val formatter = NumberFormat.getNumberInstance(Locale.US).apply {
-        minimumFractionDigits = 2
-        maximumFractionDigits = 2
+        minimumFractionDigits = if (this@toUsdDisplay >= 1.0) 2 else 4
+        maximumFractionDigits = if (this@toUsdDisplay >= 1.0) 2 else 4
     }
-    return "$${formatter.format(value)}"
+    return "$${formatter.format(this)}"
 }
 
-fun String.toPercentDisplay(): String {
-    val value = toDoubleOrNull() ?: return this
+fun Double?.toUsdDisplayOrDash(): String {
+    return this?.toUsdDisplay() ?: "—"
+}
+
+fun Double?.toPercentDisplay(): String {
+    val value = this ?: return "—"
     return String.format(Locale.US, "%+.2f%%", value)
 }

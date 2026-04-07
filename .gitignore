@@ -6,4 +6,7 @@
 *.iml
 captures/
 .DS_Store
-artifacts/
+artifacts/**
+!artifacts/
+!artifacts/README.md
+!artifacts/registry.json

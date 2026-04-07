@@ -8,6 +8,8 @@
 - Keep `docs/FEATURES.md`, `docs/OPERATIONS.md`, and `docs/DECISIONS.md` aligned.
 - Preserve separate root causes, risks, and deferred work when a request spans multiple concerns.
 - Prefer updating existing docs over creating new ones.
+- Keep `artifacts/registry.json` aligned with active evidence bundles when reusable evidence is introduced.
+- Ensure raw evidence under `artifacts/` is reflected in the correct authority docs instead of left as undocumented residue.
 
 ## Must Not
 - Invent missing decisions.

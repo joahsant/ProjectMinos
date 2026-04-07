@@ -1,10 +1,10 @@
 package com.joaquim.minos.ui.theme
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val MinosColorScheme = darkColorScheme(
+private val MinosColorScheme = lightColorScheme(
     background = MinosBackground,
     surface = MinosSurface,
     surfaceContainerHighest = MinosSurfaceHigh,
@@ -25,4 +25,3 @@ fun ProjectMinosTheme(
         content = content,
     )
 }
-

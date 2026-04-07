@@ -6,6 +6,7 @@
 ## Secrets
 - Never commit real provider keys, bearer tokens, or backend credentials.
 - Prefer zero-key public market-data sources for the MVP when they are adequate.
+- The current MVP path uses CoinGecko public endpoints without shipping provider secrets in the app.
 - If a chosen provider later requires an API key, the key must enter the app through environment or platform-specific injection, not through repository-backed constants.
 
 ## Network And Transport

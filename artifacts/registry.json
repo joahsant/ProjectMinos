@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "id": "EV-ANALYSIS-APKS",
+      "kind": "analysis_bundle",
+      "status": "active",
+      "summary": "Sample APKs and top-level analysis outputs extracted from the Android XR host and glasses environment.",
+      "paths": [
+        "artifacts/analysis/AndroidGlassesCoreEmulator.apk",
+        "artifacts/analysis/AndroidGlassesCoreHost.apk",
+        "artifacts/analysis/GlassesCompanion.apk",
+        "artifacts/analysis/XrSystemUI.apk",
+        "artifacts/analysis/hostcore-dexdump.txt",
+        "artifacts/analysis/smali-jars.txt"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md",
+        "docs/DECISIONS.md"
+      ]
+    },
+    {
+      "id": "EV-ANDROID-CANARY-ROLES",
+      "kind": "platform_analysis",
+      "status": "active",
+      "summary": "Auxiliary Android CANARY role and package analysis collected during Android XR host investigation.",
+      "paths": [
+        "artifacts/analysis/android-canary-roles"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md"
+      ]
+    },
+    {
+      "id": "EV-EMU-LOGS",
+      "kind": "emulator_logs",
+      "status": "active",
+      "summary": "Runtime logs from host and AI-glasses emulator sessions used to debug boot, pairing, projected launch, and ANR behavior.",
+      "paths": [
+        "artifacts/emulator/logs"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md",
+        "docs/DECISIONS.md"
+      ]
+    },
+    {
+      "id": "EV-EMU-UI-DUMPS",
+      "kind": "ui_dumps",
+      "status": "active",
+      "summary": "Captured emulator UI trees and dumps used to verify host and glasses runtime state during pairing and launch debugging.",
+      "paths": [
+        "artifacts/emulator/ui-dumps"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md"
+      ]
+    },
+    {
+      "id": "EV-HOSTCORE-DEX",
+      "kind": "reverse_engineering",
+      "status": "active",
+      "summary": "Raw dex extraction from the host glasses core package used to support smali and dexdump analysis.",
+      "paths": [
+        "artifacts/analysis/hostcore-dex"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md"
+      ]
+    },
+    {
+      "id": "EV-HOSTCORE-SMALI",
+      "kind": "reverse_engineering",
+      "status": "active",
+      "summary": "Decompiled smali output from the host glasses core package used to inspect projected-launch and virtual-device internals.",
+      "paths": [
+        "artifacts/analysis/hostcore-smali"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md",
+        "docs/DECISIONS.md"
+      ]
+    },
+    {
+      "id": "EV-PROJECTED-LIB",
+      "kind": "reverse_engineering",
+      "status": "active",
+      "summary": "Locally extracted projected-library internals used to cross-check projected activity and runtime behavior.",
+      "paths": [
+        "artifacts/analysis/projected-lib"
+      ],
+      "owner_docs": [
+        "docs/DECISIONS.md"
+      ]
+    },
+    {
+      "id": "EV-SDK-LOGS",
+      "kind": "sdk_logs",
+      "status": "active",
+      "summary": "SDK manager download and install logs for Android XR and host-phone system images.",
+      "paths": [
+        "artifacts/sdk/logs"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md"
+      ]
+    },
+    {
+      "id": "EV-SDK-METADATA",
+      "kind": "sdk_metadata",
+      "status": "active",
+      "summary": "Repository metadata and unpacked SDK artifacts used to inspect Android XR emulator setup and companion packages.",
+      "paths": [
+        "artifacts/sdk/metadata"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md"
+      ]
+    },
+    {
+      "id": "EV-STUDIO-PLUGIN",
+      "kind": "reverse_engineering",
+      "status": "active",
+      "summary": "Android Studio plugin internals inspected to identify the AI-glasses pairing flow and internal pairing entrypoints.",
+      "paths": [
+        "artifacts/analysis/studio-plugin"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md",
+        "docs/DECISIONS.md"
+      ]
+    },
+    {
+      "id": "EV-XR-PAIRING-2026-04-06-A",
+      "kind": "xr_pairing",
+      "status": "active",
+      "summary": "Runtime evidence bundle for the resumed XR pairing investigation.",
+      "paths": [
+        "artifacts/emulator/logs/pairing-pass-2026-04-06-a",
+        "artifacts/emulator/ui-dumps/pairing-pass-2026-04-06-a",
+        "artifacts/analysis/xr-pairing-2026-04-06-a"
+      ],
+      "owner_docs": [
+        "docs/OPERATIONS.md",
+        "docs/DECISIONS.md"
+      ]
+    }
+  ]
+}

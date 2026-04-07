@@ -6,7 +6,7 @@
 
 ## Product Summary
 Project Minos is an Android XR product for Google AI glasses focused on crypto traders.
-Its core job is to give the user continuous BTC market awareness without forcing them to stay locked to a phone or desktop screen.
+Its core job is to give the user continuous crypto market awareness without forcing them to stay locked to a phone or desktop screen.
 The product is meant to be glanceable, passive, and useful while the trader is moving, working, or doing other activities.
 
 ## Problem
@@ -16,12 +16,12 @@ Project Minos aims to reduce that dependence by surfacing the essential market s
 
 ## Target User
 - Crypto trader
-- Needs frequent BTC awareness
+- Needs frequent crypto market awareness
 - Cannot or does not want to stare at a phone or trading desk all the time
 - Values quick understanding over deep on-device interaction
 
 ## Product Goals
-- Let the user check BTC in one glance.
+- Let the user check the selected coin in one glance.
 - Reduce the need to keep opening or watching a phone.
 - Keep the experience passive and low interruption.
 - Preserve battery by avoiding unnecessary rendering and polling behavior.
@@ -33,7 +33,7 @@ Project Minos aims to reduce that dependence by surfacing the essential market s
 - Authenticate with exchanges
 - Provide full charting tools
 - Deliver true real-time sub-second streaming in the MVP
-- Support a multi-asset watchlist in the first release
+- Support simultaneous multi-asset presentation on glasses in the first release
 
 ## Platform Scope
 - Product target: Google AI glasses
@@ -41,20 +41,26 @@ Project Minos aims to reduce that dependence by surfacing the essential market s
 - Product intent: glasses-first information design, even while current tooling uses the phone-hosted path
 
 ## MVP Scope
-- Asset: `BTC/USDT`
-- Market data source: Binance public market data
-- Canonical endpoint: `GET /api/v3/ticker/24hr` for `BTCUSDT`
+- Asset catalog: top-50 cryptocurrencies by market cap
+- Default selected asset: `Bitcoin`
+- Market data source: CoinGecko public market data
+- Canonical endpoints:
+  - `GET /api/v3/coins/markets` for host catalog and current market snapshot
+  - `GET /api/v3/coins/{id}` for coin summary in the host bottom sheet
 - Connectivity: online-only
 - Refresh cadence after first success: every 60 seconds
 - Startup behavior: loading state, retry every 5 seconds until first successful quote
 - Interaction model: passive read-only on glasses
 - Time horizon: recent 24h only
 - Display contract:
-  - current BTC price
+  - current selected coin price
   - 24h variation
   - 24h high
   - 24h low
   - last successful update time
+  - host-side searchable top-50 list with logo, name, and current value
+  - host-side bottom-sheet coin preview with summary and add action
+  - host-side selected collection rendered as a colorful stacked-card carousel
 
 ## Core Product Principles
 - Glance first, interact later.
@@ -64,15 +70,19 @@ Project Minos aims to reduce that dependence by surfacing the essential market s
 - Keep the surface understandable in one look.
 
 ## Primary User Story
-As a crypto trader, I want to see the current BTC market state on AI glasses so I can keep monitoring the asset while doing other activities and still react when the market moves.
+As a crypto trader, I want to choose the crypto assets I care about on the host app and see the selected one on AI glasses so I can keep monitoring the market while doing other activities and still react when the market moves.
 
 ## MVP User Flow
-1. User opens or activates the glasses experience.
-2. The app shows a loading state.
-3. The app retries every 5 seconds until the first quote arrives.
-4. Once data is available, the app shows the BTC/USDT snapshot.
-5. The app refreshes every 60 seconds after the first success.
-6. The user reads the information passively without needing gestures or manual interaction.
+1. User opens the host app.
+2. The app shows the current collection and a searchable top-50 catalog.
+3. User searches for a coin and taps it.
+4. The app opens a bottom-sheet preview with a summary and add action.
+5. User adds the coin to the collection.
+6. User browses the stacked-card carousel and selects the active coin.
+7. The app retries every 5 seconds until the first quote for the active coin arrives.
+8. Once data is available, the app shows the selected coin snapshot.
+9. The app refreshes every 60 seconds after the first success.
+10. The glasses surface remains passive and follows the active selected coin.
 
 ## Required States
 
@@ -81,7 +91,8 @@ As a crypto trader, I want to see the current BTC market state on AI glasses so 
 - Retries every 5 seconds.
 
 ### Success
-- Shows current price, 24h variation, 24h high, 24h low, and last successful update time.
+- Shows current price, 24h variation, 24h high, 24h low, and last successful update time for the active selected coin.
+- Shows the host collection cards and searchable catalog.
 
 ### Error / Recovery
 - After the first successful load, a failed refresh clears the visible quote.
@@ -89,9 +100,10 @@ As a crypto trader, I want to see the current BTC market state on AI glasses so 
 - A new quote appears only after the next successful response.
 
 ## Data Requirements
-- Use Binance public endpoints only for the MVP.
-- Keep the endpoint set minimal and sufficient for current price plus 24h context.
-- For the MVP, use the Binance single-symbol 24hr ticker response as the main snapshot contract.
+- Use CoinGecko public endpoints only for the MVP.
+- Keep the endpoint set minimal and sufficient for ranked catalog, logos, summaries, and current 24h context.
+- Use the market list endpoint for the host catalog and current active-coin snapshot contract.
+- Use the coin detail endpoint for a short summary in the host bottom sheet.
 - Do not introduce a backend in the MVP.
 - Do not require paid market-data providers in the MVP.
 
@@ -100,6 +112,9 @@ As a crypto trader, I want to see the current BTC market state on AI glasses so 
 - Layout must favor short glance time and low cognitive load.
 - The surface must avoid noisy updates or decorative motion.
 - The design should communicate market awareness, not dashboard overload.
+- The host collection cards should follow the approved stacked-card visual direction closely.
+- The host list should prioritize quick scanning of logo, name, and price.
+- The bottom sheet should feel attached to the bottom edge rather than like a detached dialog.
 
 ## Technical Constraints
 - No project code, build, setup, emulator run, or downloads should begin until explicitly approved by the human.
@@ -107,7 +122,8 @@ As a crypto trader, I want to see the current BTC market state on AI glasses so 
 - The MVP should avoid unnecessary background work and UI refreshes.
 
 ## Success Criteria
-- User can understand the current BTC price in one glance.
+- User can search the top-50 catalog and add a coin to the host collection without confusion.
+- User can understand the current selected-coin price in one glance.
 - User can understand 24h directional context from variation, high, and low.
 - The app reaches first successful load through the retry policy without user interaction.
 - The steady-state experience refreshes every 60 seconds.
@@ -115,7 +131,7 @@ As a crypto trader, I want to see the current BTC market state on AI glasses so 
 
 ## Out Of Scope For MVP
 - Gestures
-- Multi-asset configuration on glasses
+- Simultaneous multi-asset configuration on glasses
 - Phone companion configuration flow
 - Real-time websocket market feed
 - Alerts and thresholds

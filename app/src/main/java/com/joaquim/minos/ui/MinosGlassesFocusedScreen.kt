@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -30,9 +31,9 @@ import com.joaquim.minos.model.MarketSnapshot
 fun MinosGlassesFocusedScreen(
     uiState: MarketUiState,
 ) {
-    when (uiState) {
-        is MarketUiState.Loading -> GlassesFocusedLoadingScreen(recoveryMode = uiState.recoveryMode)
-        is MarketUiState.Loaded -> GlassesFocusedQuoteScreen(snapshot = uiState.snapshot)
+    when (val quoteState = uiState.quoteState) {
+        is QuoteUiState.Loading -> GlassesFocusedLoadingScreen(recoveryMode = quoteState.recoveryMode)
+        is QuoteUiState.Loaded -> GlassesFocusedQuoteScreen(snapshot = quoteState.snapshot)
     }
 }
 
@@ -50,15 +51,15 @@ private fun GlassesFocusedLoadingScreen(
         ) {
             CircularProgressIndicator(strokeWidth = 4.dp)
             Text(
-                text = if (recoveryMode) "Reconnecting" else "Getting BTC",
+                text = if (recoveryMode) "Reconnecting" else "Getting market",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
             )
             Text(
                 text = if (recoveryMode) {
-                    "Fresh value will appear when Binance responds."
+                    "Fresh value will appear when the market feed responds."
                 } else {
-                    "Waiting for first market snapshot."
+                    "Waiting for the first selected-coin snapshot."
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -84,7 +85,7 @@ private fun GlassesFocusedQuoteScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "BTC/USDT",
+                text = snapshot.symbol,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -106,7 +107,7 @@ private fun GlassesFocusedQuoteScreen(
         }
 
         Text(
-            text = snapshot.lastPrice.toUsdtDisplay(),
+            text = snapshot.lastPrice.toUsdDisplay(),
             style = MaterialTheme.typography.displayLarge,
             fontWeight = FontWeight.Black,
             maxLines = 1,
@@ -117,7 +118,7 @@ private fun GlassesFocusedQuoteScreen(
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                containerColor = Color(0xFFECE8E1),
             ),
             shape = RoundedCornerShape(32.dp),
         ) {
@@ -129,11 +130,11 @@ private fun GlassesFocusedQuoteScreen(
             ) {
                 GlassesMetric(
                     title = "HIGH",
-                    value = snapshot.highPrice24h.toUsdtDisplay(),
+                    value = snapshot.highPrice24h.toUsdDisplayOrDash(),
                 )
                 GlassesMetric(
                     title = "LOW",
-                    value = snapshot.lowPrice24h.toUsdtDisplay(),
+                    value = snapshot.lowPrice24h.toUsdDisplayOrDash(),
                 )
             }
         }
@@ -142,17 +143,17 @@ private fun GlassesFocusedQuoteScreen(
 
 @Composable
 private fun ChangePill(
-    changePercent: String,
+    changePercent: Double?,
 ) {
-    val change = runCatching { changePercent.toDouble() }.getOrDefault(0.0)
+    val change = changePercent ?: 0.0
     val positive = change >= 0.0
 
     Card(
         colors = CardDefaults.cardColors(
             containerColor = if (positive) {
-                MaterialTheme.colorScheme.primary.copy(alpha = 0.16f)
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
             } else {
-                MaterialTheme.colorScheme.error.copy(alpha = 0.16f)
+                MaterialTheme.colorScheme.error.copy(alpha = 0.12f)
             },
         ),
         shape = RoundedCornerShape(999.dp),

@@ -21,7 +21,7 @@
 
 ## Current Project Direction
 - The product is an Android XR app for AI glasses.
-- The initial target is a Bitcoin quote surface projected to AI glasses through the Android XR development model currently available.
+- The initial target is a passive selected-coin quote surface projected to AI glasses through the Android XR development model currently available, with host-side selection from a curated crypto catalog.
 - The product promise is passive monitoring for traders with low interruption cost.
 - The glasses surface must stay glanceable, battery-aware, and readable at a short dwell time.
 - The current phase still requires strong planning and documentation discipline even when implementation tasks are approved.
@@ -76,6 +76,7 @@
 - Treat `docs/OPERATIONS.md` as the factual state, blocker, and execution queue source.
 - Treat `docs/DECISIONS.md` as the consolidated source for active decisions and still-open questions.
 - Treat `docs/SECURITY.md` and `docs/DATA_GOVERNANCE.md` as the source of truth for secrets, storage, transport, retention, and external data handling.
+- Treat `artifacts/` as raw evidence, not as project truth by itself.
 - Prefer updating existing docs before creating new ones.
 - Do not create a new `.md` unless there is a real authority gap.
 - Do not silently expand scope when implementation reveals new states, pairing behavior, backend requirements, or data-policy changes.
@@ -84,6 +85,21 @@
 - For this project, battery cost is a first-class product concern; avoid gratuitous polling, rendering, and background work.
 - When revising agent contracts, routing logic, or workflow prompts, use the harness iteration loop instead of untracked prompt drift.
 - Keep the repository coherent after every completed governance/tooling task; do not leave broken references to missing agent docs, playbooks, or harness files.
+
+## Repository Memory Model
+- Use a three-layer memory model:
+  - raw evidence in `artifacts/`
+  - synthesized project truth in `docs/`
+  - maintenance rules in `AGENTS.md`, `docs/agents/`, and `docs/playbooks/`
+- Evidence must be curated by bundle, not treated as a flat pile of files.
+- Use `artifacts/registry.json` as the tracked registry of evidence bundles that matter to the active project state.
+- A relevant evidence bundle is not complete until at least one authority doc in `docs/` reflects why it matters.
+- When adding or materially changing evidence, prefer:
+  1. place or update the raw evidence under `artifacts/`
+  2. register or update the bundle in `artifacts/registry.json`
+  3. update the affected authority docs in `docs/`
+- For XR pairing work, create or update a dedicated evidence bundle for each reusable investigation pass instead of leaving ad hoc logs and dumps unregistered.
+- Do not rely on conversation memory when the repository can hold the evidence and synthesis explicitly.
 
 ## Mandatory Work Order
 - For every substantial task:
@@ -99,6 +115,7 @@
 - Read `docs/OPERATIONS.md` when the task touches blockers, priorities, setup posture, or roadmap state.
 - Read `docs/DECISIONS.md` before inventing answers to unresolved behavior.
 - Read `docs/FEATURES.md` before changing feature behavior.
+- Read `artifacts/README.md` and `artifacts/registry.json` when a task depends on logs, decompilation output, SDK metadata, or emulator evidence.
 - Read `docs/SECURITY.md` and `docs/DATA_GOVERNANCE.md` when touching API keys, transport, user preferences, telemetry, or persistence.
 - Read `docs/skills/agent_harness_iteration.md` when improving agent contracts, prompts, or routing behavior.
 - Read the relevant agent contracts in `docs/agents/` for scoped role behavior.
@@ -132,6 +149,7 @@
 
 ## Repository Structure
 - `AGENTS.md` is the primary Codex contract for this repository.
+- `artifacts/` holds raw evidence bundles and their tracked registry metadata.
 - Agent contracts live under `docs/agents/`.
 - Workflow skills live under `docs/skills/`.
 - Routing support playbooks live under `docs/playbooks/`.

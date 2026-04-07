@@ -11,10 +11,11 @@ import androidx.xr.glimmer.Button
 import androidx.xr.glimmer.Card
 import androidx.xr.glimmer.Text
 import androidx.xr.glimmer.surface
-import com.joaquim.minos.ui.MarketUiState
 import com.joaquim.minos.ui.MarketViewModel
+import com.joaquim.minos.ui.QuoteUiState
 import com.joaquim.minos.ui.toPercentDisplay
-import com.joaquim.minos.ui.toUsdtDisplay
+import com.joaquim.minos.ui.toUsdDisplay
+import com.joaquim.minos.ui.toUsdDisplayOrDash
 
 @Composable
 fun GlassesHomeScreen(
@@ -37,22 +38,22 @@ fun GlassesHomeScreen(
                 }
             },
         ) {
-            when (val state = uiState) {
-                is MarketUiState.Loading -> {
+            when (val state = uiState.quoteState) {
+                is QuoteUiState.Loading -> {
                     Text(
                         if (state.recoveryMode) {
-                            "Reconnecting to Binance..."
+                            "Reconnecting to CoinGecko..."
                         } else {
-                            "Loading BTC/USDT..."
+                            "Loading selected coin..."
                         },
                     )
                 }
 
-                is MarketUiState.Loaded -> {
-                    Text("BTC/USDT ${state.snapshot.lastPrice.toUsdtDisplay()}")
+                is QuoteUiState.Loaded -> {
+                    Text("${state.snapshot.symbol} ${state.snapshot.lastPrice.toUsdDisplay()}")
                     Text("24h ${state.snapshot.priceChangePercent24h.toPercentDisplay()}")
-                    Text("High ${state.snapshot.highPrice24h.toUsdtDisplay()}")
-                    Text("Low ${state.snapshot.lowPrice24h.toUsdtDisplay()}")
+                    Text("High ${state.snapshot.highPrice24h.toUsdDisplayOrDash()}")
+                    Text("Low ${state.snapshot.lowPrice24h.toUsdDisplayOrDash()}")
                 }
             }
         }

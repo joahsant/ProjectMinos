@@ -66,6 +66,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
+    implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("androidx.xr.runtime:runtime:1.0.0-alpha12")
     implementation("androidx.xr.glimmer:glimmer:1.0.0-alpha08")
     implementation("androidx.xr.projected:projected:1.0.0-alpha05")
