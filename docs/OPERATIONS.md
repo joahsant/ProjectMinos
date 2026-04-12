@@ -24,6 +24,8 @@
 - Operational artifacts are consolidated under `artifacts/` instead of the repository root.
 - The repository now uses a lightweight evidence-memory pipeline: raw evidence in `artifacts/`, tracked bundle metadata in `artifacts/registry.json`, and synthesized truth in the authority docs.
 - `python tools/multiagent/evidence_pipeline.py lint` currently passes against the tracked bundle set.
+- The `Daily Commit Minos` automation is now configured as a thread-bound heartbeat automation for this project, with local execution instead of Codex worktrees.
+- This automation model is intended to preserve one local thread per project and avoid detached-head or `.git` write failures caused by isolated worktree execution.
 
 ## Active Evidence Bundles
 - `EV-EMU-LOGS` -> `artifacts/emulator/logs`
