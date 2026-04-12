@@ -43,5 +43,6 @@
 - Root overview: `../README.md`
 - Governance contract: `../AGENTS.md`
 - Routing playbook: `playbooks/activation_matrix.md`
+- Agent flow visual: `playbooks/agent_flow_visual.md`
 - Evidence pipeline: `playbooks/evidence_memory_pipeline.md`
 - Harness workflow: `skills/agent_harness_iteration.md`

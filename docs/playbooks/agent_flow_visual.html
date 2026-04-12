@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Minos Agent Flow</title>
+  <style>
+    :root {
+      --bg: #f3efe7;
+      --panel: rgba(255, 252, 245, 0.9);
+      --panel-strong: #fffaf0;
+      --ink: #1d232b;
+      --muted: #5e6773;
+      --line: #a8b3bf;
+      --lead: #f97316;
+      --product: #0f766e;
+      --ux: #0f62fe;
+      --data: #7c3aed;
+      --engineer: #2563eb;
+      --qa: #b45309;
+      --docs: #047857;
+      --gate: #111827;
+      --accent: #dc2626;
+      --shadow: 0 18px 40px rgba(40, 46, 57, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(249, 115, 22, 0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.13), transparent 24%),
+        linear-gradient(180deg, #f8f4ec 0%, #f1ebe0 100%);
+    }
+
+    .page {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(255, 250, 240, 0.98), rgba(249, 245, 237, 0.95));
+      border: 1px solid rgba(29, 35, 43, 0.08);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.08);
+      color: var(--gate);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 16px 0 10px;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 980px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(29, 35, 43, 0.08);
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex: none;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .flow-board,
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid rgba(29, 35, 43, 0.08);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .flow-board {
+      padding: 24px;
+      overflow: auto;
+    }
+
+    .board-title {
+      margin: 0 0 20px;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .lanes {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(210px, 1fr));
+      gap: 18px;
+      min-width: 1140px;
+      align-items: start;
+    }
+
+    .lane {
+      display: grid;
+      gap: 14px;
+      position: relative;
+    }
+
+    .lane-label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-left: 4px;
+    }
+
+    .node {
+      position: relative;
+      background: var(--panel-strong);
+      border: 1px solid rgba(29, 35, 43, 0.1);
+      border-radius: var(--radius);
+      padding: 16px 16px 14px;
+      min-height: 110px;
+      box-shadow: 0 12px 24px rgba(40, 46, 57, 0.08);
+    }
+
+    .node::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -18px;
+      width: 18px;
+      border-top: 2px dashed var(--line);
+    }
+
+    .lane:last-child .node::after {
+      display: none;
+    }
+
+    .node small {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(17, 24, 39, 0.08);
+      color: var(--gate);
+    }
+
+    .node h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .node p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .accent-lead { border-left: 6px solid var(--lead); }
+    .accent-product { border-left: 6px solid var(--product); }
+    .accent-ux { border-left: 6px solid var(--ux); }
+    .accent-data { border-left: 6px solid var(--data); }
+    .accent-engineer { border-left: 6px solid var(--engineer); }
+    .accent-qa { border-left: 6px solid var(--qa); }
+    .accent-docs { border-left: 6px solid var(--docs); }
+    .accent-gate { border-left: 6px solid var(--gate); }
+    .accent-alert { border-left: 6px solid var(--accent); }
+
+    .stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini {
+      min-height: auto;
+      padding: 14px;
+    }
+
+    .mini h4 {
+      margin: 0 0 4px;
+      font-size: 14px;
+    }
+
+    .mini p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .sidebar {
+      padding: 22px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(29, 35, 43, 0.08);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+
+    .panel ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .role-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .role-card {
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255, 250, 240, 0.9);
+      border: 1px solid rgba(29, 35, 43, 0.08);
+    }
+
+    .role-card strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .role-card span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1100px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <span class="eyebrow">Project Minos multiagent runtime</span>
+      <h1>Agent Flow Map</h1>
+      <p>
+        This page translates the repository governance and Python orchestration into a single visual flow.
+        The key idea is simple: every request enters through Lead, gets classified, opens a gate sequence,
+        activates roles at the required depth, routes to the next owner, and optionally persists request state
+        plus role reports under the local runtime directory.
+      </p>
+      <div class="legend">
+        <span class="chip"><span class="dot" style="background: var(--lead);"></span>Lead intake</span>
+        <span class="chip"><span class="dot" style="background: var(--product);"></span>Product premise work</span>
+        <span class="chip"><span class="dot" style="background: var(--ux);"></span>UX/UI validation</span>
+        <span class="chip"><span class="dot" style="background: var(--data);"></span>Market-data review</span>
+        <span class="chip"><span class="dot" style="background: var(--engineer);"></span>Implementation route</span>
+        <span class="chip"><span class="dot" style="background: var(--qa);"></span>Validation route</span>
+        <span class="chip"><span class="dot" style="background: var(--docs);"></span>Truth consolidation</span>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <section class="flow-board">
+        <h2 class="board-title">Flow canvas</h2>
+        <div class="lanes">
+          <div class="lane">
+            <div class="lane-label">1. Intake</div>
+            <article class="node accent-lead">
+              <small>Entry</small>
+              <h3>User request</h3>
+              <p>Every request starts here and must enter through Lead / Orchestrator. No direct Engineer-first path is allowed.</p>
+            </article>
+            <article class="node accent-lead">
+              <small>Lead</small>
+              <h3>Interpretation + classification</h3>
+              <p>Lead makes the intake explicit: interpretation, classification, gate state, activated roles, depth, and next owner.</p>
+            </article>
+            <article class="node accent-gate">
+              <small>Routing signal</small>
+              <h3>RequestSignals payload</h3>
+              <p>Signals such as UX impact, new states, ambiguity, structural change, and polling or data changes drive the route.</p>
+            </article>
+          </div>
+
+          <div class="lane">
+            <div class="lane-label">2. Decision layer</div>
+            <article class="node accent-gate">
+              <small>Classifier</small>
+              <h3>Change class</h3>
+              <p>One of: trivial patch, localized change, feature flow, or structural initiative.</p>
+            </article>
+            <article class="node accent-gate">
+              <small>Mode</small>
+              <h3>Task mode</h3>
+              <p>One of: advisory, review, planning, or implementation. Classification and mode stay separate.</p>
+            </article>
+            <article class="node accent-alert">
+              <small>Output</small>
+              <h3>Lead report</h3>
+              <p>The orchestrator emits assumptions, risks, gate sequence, role activations, and a recommendation for the next role.</p>
+            </article>
+          </div>
+
+          <div class="lane">
+            <div class="lane-label">3. Role activation</div>
+            <article class="node accent-product">
+              <small>Role stack</small>
+              <h3>Product Strategist</h3>
+              <p>Activated deeply when behavior, states, retries, or scope boundaries are unresolved.</p>
+            </article>
+            <article class="node accent-ux">
+              <small>Role stack</small>
+              <h3>UX/UI Strategist</h3>
+              <p>Activated deeply when glanceability, accessibility, battery-aware rendering, or visible flow changes matter.</p>
+            </article>
+            <article class="node accent-data">
+              <small>Role stack</small>
+              <h3>Market Data Analyst</h3>
+              <p>Activated deeply when data contracts, freshness guarantees, source choice, or polling cadence change.</p>
+            </article>
+          </div>
+
+          <div class="lane">
+            <div class="lane-label">4. Execution path</div>
+            <article class="node accent-engineer">
+              <small>Primary route</small>
+              <h3>Engineer</h3>
+              <p>Implements only after premises are approved. Must not reopen product scope silently.</p>
+            </article>
+            <article class="node accent-qa">
+              <small>Primary route</small>
+              <h3>QA</h3>
+              <p>Validates acceptance, edge cases, regressions, and failure locality when validation is explicitly requested.</p>
+            </article>
+            <article class="node accent-docs">
+              <small>Primary route</small>
+              <h3>Documentation / Historian</h3>
+              <p>Consolidates the internal truth across docs and evidence so the repo remains coherent after delivery.</p>
+            </article>
+          </div>
+
+          <div class="lane">
+            <div class="lane-label">5. Runtime memory</div>
+            <article class="node accent-gate">
+              <small>Gate chain</small>
+              <h3>Gate sequence</h3>
+              <p>Understanding / Plan → Operational Specification → Implementation → Validation → Documentary Consolidation.</p>
+            </article>
+            <article class="node accent-docs">
+              <small>Persistence</small>
+              <h3>Active request state</h3>
+              <p>`lead_entrypoint.py` persists the active request, intake payload, and request log under `%LOCALAPPDATA%\\CodexLead\\Project Minos\\active`.</p>
+            </article>
+            <article class="node accent-docs">
+              <small>Persistence</small>
+              <h3>Role report registry</h3>
+              <p>`role_report_entrypoint.py` stores both the latest role report and a timestamped copy in `role_reports/` for traceability.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="panel">
+          <h2>Recommendation router</h2>
+          <div class="stack">
+            <div class="role-card">
+              <strong>Trivial patch</strong>
+              <span>Recommendation usually goes directly to Engineer with light validation.</span>
+            </div>
+            <div class="role-card">
+              <strong>Pure contract review</strong>
+              <span>Structural review without product or UX/data change routes to Documentation / Historian.</span>
+            </div>
+            <div class="role-card">
+              <strong>Behavior ambiguity</strong>
+              <span>Routes to Product Strategist before implementation starts.</span>
+            </div>
+            <div class="role-card">
+              <strong>Visible surface impact</strong>
+              <span>Routes to UX/UI Strategist when readability, glanceability, or interaction cost is material.</span>
+            </div>
+            <div class="role-card">
+              <strong>Data or freshness impact</strong>
+              <span>Routes to Market Data Analyst when source guarantees or polling logic are touched.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Depth model</h2>
+          <div class="role-grid">
+            <div class="role-card">
+              <strong>Deep analysis</strong>
+              <span>Used for feature flows, structural work, or ambiguous requests that can drift without explicit premise work.</span>
+            </div>
+            <div class="role-card">
+              <strong>Light validation</strong>
+              <span>Used for bounded changes where a role mainly confirms no hidden drift or regression exists.</span>
+            </div>
+            <div class="role-card">
+              <strong>No-impact confirmation</strong>
+              <span>Used when a role is logically present in the stack but no meaningful impact is currently signaled.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Source mapping</h2>
+          <ul>
+            <li>`AGENTS.md` defines the intake contract, role stack, authority model, and persistence rule.</li>
+            <li>`docs/playbooks/activation_matrix.md` defines default role depth by change class.</li>
+            <li>`docs/agents/*.md` define each role mission, responsibilities, and prohibitions.</li>
+            <li>`tools/multiagent/lead_orchestrator.py` materializes classification, activation, gates, and recommendation logic.</li>
+            <li>`tools/multiagent/lead_entrypoint.py` materializes runtime persistence.</li>
+            <li>`tools/multiagent/role_report_entrypoint.py` materializes role report capture.</li>
+          </ul>
+        </section>
+
+        <section class="panel footer-note">
+          This visual describes the current agent system as implemented in the repository on 2026-04-12. It is a documentation artifact, not an executable workflow editor.
+        </section>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>
